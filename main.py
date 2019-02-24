@@ -15,12 +15,17 @@ ident(IDENT)
 A = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
 B = [[11,12,13,14],[15,16,17,18],[19,20,21,22],[23,24,25,26]]
 matrix_mult(A,B)
+print("Printing A")
 print_matrix(A)
+print("\nPrinting B")
 print_matrix(B)
 matrix_mult(B,A)
+print("\nPrinting A")
 print_matrix(A)
+print("\nPrinting B")
 print_matrix(B)
 matrix_mult(IDENT,A)
+print("\nPrinting A")
 print_matrix(A)
 
 def translate(matrix,dx,dy,dz):
@@ -73,7 +78,7 @@ for i in range(sides):
 
 translate(matrix, 250, 250, 0)
 
-print_matrix(matrix)
+#print_matrix(matrix)
 save = matrix
 
 turns = 1000
