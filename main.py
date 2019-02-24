@@ -1,3 +1,5 @@
+#Thanks, Numberphile
+
 from display import *
 from draw import *
 from matrix import *
@@ -59,33 +61,38 @@ def rotate(matrix,deg,cx = 0,cy = 0,cz = 0):
 def fixMatrix(matrix):
     for i in range(len(matrix)):
         for j in range(4):
-            matrix[i][j] = int(matrix[i][j])
+            matrix[i][j] = int(round(matrix[i][j],0))
 
-add_edge(matrix,250,250,0,250,251,0)
+sides = 36
+radius = 3
+
+for i in range(sides):
+    ang = pi * 2 * i / sides
+    nextang = pi * 2 * (i + 1) / sides
+    add_edge(matrix,radius * cos(ang), radius * sin(ang), 0, radius * cos(nextang), radius * sin(nextang), 0)
+
+translate(matrix, 250, 250, 0)
 
 print_matrix(matrix)
 save = matrix
 
-freq = 5
+turns = 1000
+grat = (1 + math.sqrt(5))/2
 
-for i in range(int(7 * freq)):
+singturn = pi * grat
+
+for i in range(turns):
+    color = [int((i / turns) * 255), 255, 0]
     matrix = save
     save = deepcopy(matrix)
     transform = new_matrix()
     ident(transform)
-    rotate(transform,i / float(7) * pi * 2,250,250,0)
+    turnamt = i * singturn
+    dist = (250 * i / turns)
+    rotate(transform,turnamt,250,250,0)
+    translate(matrix, dist * cos(turnamt), dist * sin(turnamt),0)
     matrix_mult(transform,matrix)
-    dilate(matrix,i * 250/(freq * 7),250,250,0)
     fixMatrix(matrix)
     draw_lines(matrix, screen, color)
 
-fixMatrix(matrix)
-draw_lines( matrix, screen, color )
-
-# rotate(matrix,pi / 6,250,250,0)
-# dilate(matrix,2,250,250,0)
-# fixMatrix(matrix)
-# draw_lines( matrix, screen, color )
-
-draw_lines( matrix, screen, color )
 display(screen)
